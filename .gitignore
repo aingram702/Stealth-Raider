@@ -1,0 +1,17 @@
+# Build artifacts
+stealth-raider.zip
+*.crx
+*.pem
+
+# Node
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc

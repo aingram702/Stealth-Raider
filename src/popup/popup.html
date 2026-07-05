@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stealth Raider</title>
+  <link rel="stylesheet" href="../ui/theme.css" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="app hud-surface">
+
+    <!-- Header -->
+    <header class="topbar">
+      <div class="brand">
+        <img src="../assets/icons/icon48.png" alt="" class="brand__mark" width="30" height="30" />
+        <div class="brand__text">
+          <div class="brand__name">STEALTH&nbsp;RAIDER</div>
+          <div class="brand__sub eyebrow">B-21 · COVERT OPS</div>
+        </div>
+      </div>
+      <span id="tierPill" class="pill">RECRUIT</span>
+    </header>
+
+    <!-- Master ARM -->
+    <section class="panel panel--bracket arm" id="armPanel">
+      <div class="radar off" id="radar"></div>
+      <div class="arm__mid">
+        <div class="eyebrow">Master systems</div>
+        <div class="arm__status" id="armStatus">STANDBY</div>
+        <div class="arm__hint" id="armHint">Ghost Mode disengaged</div>
+      </div>
+      <label class="switch arm__switch" title="Arm / disarm all stealth systems">
+        <input type="checkbox" id="ghostToggle" />
+        <span class="track"></span>
+      </label>
+    </section>
+
+    <!-- Identity readout -->
+    <section class="panel panel--bracket">
+      <div class="readout-head">
+        <span class="eyebrow">Active identity</span>
+        <span id="identSeed" class="pill pill--live">—</span>
+      </div>
+      <dl class="readout" id="identReadout">
+        <dt>System</dt><dd id="rSystem">—</dd>
+        <dt>Agent</dt><dd id="rAgent">—</dd>
+        <dt>GPU</dt><dd id="rGpu">—</dd>
+        <dt>Screen</dt><dd id="rScreen">—</dd>
+        <dt>Locale</dt><dd id="rLocale">—</dd>
+        <dt>Timezone</dt><dd id="rTz">—</dd>
+        <dt>Location</dt><dd id="rGeo">—</dd>
+        <dt>Network</dt><dd id="rNet">—</dd>
+      </dl>
+    </section>
+
+    <!-- Quick toggles -->
+    <section class="toggles">
+      <label class="chip"><span>Fingerprint</span><span class="switch"><input type="checkbox" data-setting="spoofFingerprint" /><span class="track"></span></span></label>
+      <label class="chip"><span>Canvas</span><span class="switch"><input type="checkbox" data-setting="spoofCanvas" /><span class="track"></span></span></label>
+      <label class="chip"><span>WebGL</span><span class="switch"><input type="checkbox" data-setting="spoofWebgl" /><span class="track"></span></span></label>
+      <label class="chip"><span>Audio</span><span class="switch"><input type="checkbox" data-setting="spoofAudio" /><span class="track"></span></span></label>
+      <label class="chip"><span>Location</span><span class="switch"><input type="checkbox" data-setting="spoofLocation" /><span class="track"></span></span></label>
+      <label class="chip"><span>WebRTC guard</span><span class="switch"><input type="checkbox" data-setting="webrtcProtection" /><span class="track"></span></span></label>
+      <label class="chip"><span>Incognito</span><span class="switch"><input type="checkbox" data-setting="autoIncognito" /><span class="track"></span></span></label>
+      <label class="chip"><span>Auto-wipe</span><span class="switch"><input type="checkbox" data-setting="wipeOnRaidEnd" /><span class="track"></span></span></label>
+    </section>
+
+    <!-- Actions -->
+    <section class="actions">
+      <button class="btn btn--primary" id="launchBtn">▲ Launch Raid</button>
+      <div class="actions__row">
+        <button class="btn" id="newIdentityBtn">⟳ New Identity</button>
+        <button class="btn btn--danger" id="selfDestructBtn">☢ Self-Destruct</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="stats" id="stats">
+        <span><b id="sRaids">0</b> raids</span>
+        <span><b id="sWipes">0</b> wipes</span>
+        <span><b id="sIds">0</b> ID's</span>
+      </div>
+      <div class="footer__links">
+        <a href="#" id="cockpitLink">Full cockpit ▸</a>
+        <a href="#" id="upgradeLink" class="upsell" hidden>Upgrade ★</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
