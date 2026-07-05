@@ -1,0 +1,14 @@
+{
+  "name": "stealth-raider",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Covert-ops privacy kit for Chrome: spoof fingerprint, location & IP, incognito raids, self-destruct traces.",
+  "type": "module",
+  "scripts": {
+    "icons": "python3 tools/generate-icons.py",
+    "check": "node --check src/content/inject-loader.js && node --check src/content/fingerprint-spoof.js && for f in src/lib/*.js src/background/*.js src/popup/*.js src/options/*.js; do node --input-type=module --check < \"$f\"; done",
+    "zip": "zip -r -FS stealth-raider.zip manifest.json src -x '*.DS_Store'"
+  },
+  "keywords": ["chrome-extension", "privacy", "anti-fingerprint", "incognito", "proxy", "mv3"],
+  "license": "MIT"
+}

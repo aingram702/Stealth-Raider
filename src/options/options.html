@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stealth Raider · Cockpit</title>
+  <link rel="stylesheet" href="../ui/theme.css" />
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <div class="cockpit hud-surface">
+
+    <!-- Rail -->
+    <nav class="rail">
+      <div class="rail__brand">
+        <img src="../assets/icons/icon48.png" alt="" width="36" height="36" />
+        <div>
+          <div class="rail__name">STEALTH RAIDER</div>
+          <div class="eyebrow">COCKPIT · B-21</div>
+        </div>
+      </div>
+
+      <button class="nav" data-tab="dashboard"><span class="nav__i">◎</span> Dashboard</button>
+      <button class="nav" data-tab="identity"><span class="nav__i">☰</span> Identity</button>
+      <button class="nav" data-tab="network"><span class="nav__i">⇄</span> Network / IP</button>
+      <button class="nav" data-tab="hardening"><span class="nav__i">⛨</span> Hardening</button>
+      <button class="nav" data-tab="session"><span class="nav__i">☢</span> Session</button>
+      <button class="nav" data-tab="upgrade"><span class="nav__i">★</span> Upgrade</button>
+      <button class="nav" data-tab="about"><span class="nav__i">ⓘ</span> About</button>
+
+      <div class="rail__foot">
+        <div class="arm-mini">
+          <label class="switch"><input type="checkbox" id="ghostToggle" /><span class="track"></span></label>
+          <div>
+            <div id="armMiniStatus" class="arm-mini__status">STANDBY</div>
+            <div class="eyebrow">Ghost Mode</div>
+          </div>
+        </div>
+        <span id="tierPill" class="pill">RECRUIT</span>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="content">
+
+      <!-- DASHBOARD -->
+      <section class="tab" data-tab="dashboard">
+        <header class="tab__head">
+          <h1>Mission Status</h1>
+          <p class="sub">Real-time readout of your covert posture.</p>
+        </header>
+
+        <div class="grid grid-2">
+          <div class="panel panel--bracket status-hero">
+            <div class="radar off" id="radar"></div>
+            <div>
+              <div class="eyebrow">Master systems</div>
+              <div class="status-hero__val" id="heroStatus">STANDBY</div>
+              <div class="status-hero__hint" id="heroHint">Signature exposed</div>
+            </div>
+          </div>
+          <div class="panel panel--bracket">
+            <div class="eyebrow">Sortie log</div>
+            <div class="metrics">
+              <div><b id="mRaids">0</b><span>Raids launched</span></div>
+              <div><b id="mWipes">0</b><span>Data wipes</span></div>
+              <div><b id="mIds">0</b><span>Identities forged</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel--bracket">
+          <div class="eyebrow">Active identity</div>
+          <dl class="readout readout--wide" id="dashReadout">
+            <dt>System</dt><dd id="dSystem">—</dd>
+            <dt>User agent</dt><dd id="dAgent">—</dd>
+            <dt>GPU</dt><dd id="dGpu">—</dd>
+            <dt>Screen</dt><dd id="dScreen">—</dd>
+            <dt>Locale / TZ</dt><dd id="dLocale">—</dd>
+            <dt>Location</dt><dd id="dGeo">—</dd>
+            <dt>Network route</dt><dd id="dNet">—</dd>
+          </dl>
+        </div>
+
+        <div class="actions-row">
+          <button class="btn btn--primary" id="launchBtn">▲ Launch Raid</button>
+          <button class="btn" id="newIdentityBtn">⟳ New Identity</button>
+          <button class="btn btn--danger" id="selfDestructBtn">☢ Self-Destruct</button>
+        </div>
+
+        <div class="panel keys">
+          <div class="eyebrow">Hotkeys</div>
+          <ul>
+            <li><kbd>Ctrl/⌘</kbd>+<kbd>Shift</kbd>+<kbd>Y</kbd> Launch raid</li>
+            <li><kbd>Ctrl/⌘</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd> Panic wipe</li>
+            <li><kbd>Ctrl/⌘</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd> Open cockpit</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- IDENTITY -->
+      <section class="tab" data-tab="identity">
+        <header class="tab__head">
+          <h1>Identity Forge</h1>
+          <p class="sub">Your spoofed browser fingerprint. Coherent by design — every value agrees with the others.</p>
+        </header>
+
+        <div class="panel panel--bracket">
+          <div class="row-between">
+            <span class="eyebrow">Current signature</span>
+            <button class="btn btn--ghost btn-sm" id="regenBtn">⟳ Regenerate</button>
+          </div>
+          <dl class="readout readout--wide" id="idReadout">
+            <dt>Seed</dt><dd id="idSeed">—</dd>
+            <dt>OS / platform</dt><dd id="idOs">—</dd>
+            <dt>User agent</dt><dd id="idUa">—</dd>
+            <dt>GPU vendor</dt><dd id="idGpuV">—</dd>
+            <dt>GPU renderer</dt><dd id="idGpuR">—</dd>
+            <dt>Screen</dt><dd id="idScreen">—</dd>
+            <dt>Cores / memory</dt><dd id="idHw">—</dd>
+            <dt>Languages</dt><dd id="idLang">—</dd>
+            <dt>Timezone</dt><dd id="idTz">—</dd>
+          </dl>
+        </div>
+
+        <div class="panel panel--bracket">
+          <div class="eyebrow">Spoofing modules</div>
+          <div class="setting-list" id="spoofToggles">
+            <label class="setting"><div><b>Browser fingerprint</b><span>navigator, screen, hardware, client-hints</span></div><span class="switch"><input type="checkbox" data-setting="spoofFingerprint" /><span class="track"></span></span></label>
+            <label class="setting"><div><b>User-Agent</b><span>rotates UA + Client Hints per identity</span></div><span class="switch"><input type="checkbox" data-setting="spoofUserAgent" /><span class="track"></span></span></label>
+            <label class="setting"><div><b>Canvas noise</b><span>per-session deterministic canvas hash</span></div><span class="switch"><input type="checkbox" data-setting="spoofCanvas" /><span class="track"></span></span></label>
+            <label class="setting"><div><b>WebGL</b><span>spoof GPU strings + readPixels noise</span></div><span class="switch"><input type="checkbox" data-setting="spoofWebgl" /><span class="track"></span></span></label>
+            <label class="setting"><div><b>Audio fingerprint</b><span>subtle AudioContext perturbation</span></div><span class="switch"><input type="checkbox" data-setting="spoofAudio" /><span class="track"></span></span></label>
+            <label class="setting"><div><b>Timezone</b><span>reported timezone + offset</span></div><span class="switch"><input type="checkbox" data-setting="spoofTimezone" /><span class="track"></span></span></label>
+          </div>
+        </div>
+
+        <div class="panel panel--bracket">
+          <div class="row-between">
+            <div>
+              <div class="eyebrow">Location cloak <span class="pill pill--pro" id="geoProTag" hidden>PRO</span></div>
+              <p class="mini">Override the Geolocation API + timezone to a chosen city.</p>
+            </div>
+            <label class="switch"><input type="checkbox" data-setting="spoofLocation" id="locToggle" /><span class="track"></span></label>
+          </div>
+          <select id="locPreset" class="field"></select>
+        </div>
+      </section>
+
+      <!-- NETWORK -->
+      <section class="tab" data-tab="network">
+        <header class="tab__head">
+          <h1>Network &amp; IP</h1>
+          <p class="sub">Route traffic through a proxy to mask your real IP. A browser can't change your IP without one.</p>
+        </header>
+
+        <div class="panel panel--bracket">
+          <div class="eyebrow">Stealth Servers <span class="pill pill--pro">PRO</span></div>
+          <p class="mini">One-click managed exit regions. Provisioned for Raider Pro &amp; Squadron members.</p>
+          <div class="servers" id="serverList"></div>
+        </div>
+
+        <div class="panel panel--bracket">
+          <div class="row-between">
+            <div class="eyebrow">Manual proxy</div>
+            <label class="switch"><input type="checkbox" data-setting="proxyEnabled" id="proxyToggle" /><span class="track"></span></label>
+          </div>
+          <div class="form-grid" id="proxyForm">
+            <label>Scheme
+              <select id="proxyScheme" class="field">
+                <option value="socks5">SOCKS5</option>
+                <option value="socks4">SOCKS4</option>
+                <option value="http">HTTP</option>
+                <option value="https">HTTPS</option>
+              </select>
+            </label>
+            <label>Host<input id="proxyHost" class="field" placeholder="127.0.0.1" /></label>
+            <label>Port<input id="proxyPort" class="field" type="number" placeholder="1080" /></label>
+            <label>Username<input id="proxyUser" class="field" placeholder="optional" /></label>
+            <label>Password<input id="proxyPass" class="field" type="password" placeholder="optional" /></label>
+          </div>
+          <button class="btn btn--ghost btn-sm" id="saveProxyBtn">Save proxy</button>
+        </div>
+
+        <div class="panel panel--bracket">
+          <label class="setting"><div><b>WebRTC leak protection</b><span>stops WebRTC from exposing your real IP behind the proxy</span></div><span class="switch"><input type="checkbox" data-setting="webrtcProtection" /><span class="track"></span></span></label>
+        </div>
+      </section>
+
+      <!-- HARDENING -->
+      <section class="tab" data-tab="hardening">
+        <header class="tab__head">
+          <h1>Hardening</h1>
+          <p class="sub">Extra countermeasures that shrink your trackable surface.</p>
+        </header>
+        <div class="panel panel--bracket">
+          <div class="setting-list">
+            <label class="setting"><div><b>Block third-party cookies</b><span>kills cross-site tracking cookies</span></div><span class="switch"><input type="checkbox" data-setting="blockThirdPartyCookies" /><span class="track"></span></span></label>
+            <label class="setting"><div><b>Do Not Track + GPC</b><span>sends DNT &amp; Global Privacy Control signals</span></div><span class="switch"><input type="checkbox" data-setting="doNotTrack" /><span class="track"></span></span></label>
+            <label class="setting"><div><b>Strip referrer</b><span>removes the Referer header from requests</span></div><span class="switch"><input type="checkbox" data-setting="stripReferrer" /><span class="track"></span></span></label>
+            <label class="setting"><div><b>Block hyperlink auditing</b><span>disables &lt;a ping&gt; beacons</span></div><span class="switch"><input type="checkbox" data-setting="blockHyperlinkAuditing" /><span class="track"></span></span></label>
+            <label class="setting"><div><b>Disable prefetch / prediction</b><span>stops speculative connections that leak intent</span></div><span class="switch"><input type="checkbox" data-setting="disablePrefetch" /><span class="track"></span></span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- SESSION -->
+      <section class="tab" data-tab="session">
+        <header class="tab__head">
+          <h1>Session Hygiene</h1>
+          <p class="sub">Get in, get out, leave nothing behind.</p>
+        </header>
+        <div class="panel panel--bracket">
+          <div class="setting-list">
+            <label class="setting"><div><b>Auto-incognito raids</b><span>launch every raid in a fresh incognito window</span></div><span class="switch"><input type="checkbox" data-setting="autoIncognito" /><span class="track"></span></span></label>
+            <label class="setting"><div><b>Wipe on raid end</b><span>scrub traces created during a raid when its window closes</span></div><span class="switch"><input type="checkbox" data-setting="wipeOnRaidEnd" /><span class="track"></span></span></label>
+            <label class="setting"><div><b>Wipe on browser startup</b><span>full clean slate every launch</span></div><span class="switch"><input type="checkbox" data-setting="wipeOnStartup" /><span class="track"></span></span></label>
+          </div>
+        </div>
+
+        <div class="panel panel--bracket">
+          <div class="eyebrow">Wipe payload</div>
+          <p class="mini">What Self-Destruct and auto-wipe remove.</p>
+          <div class="scope-grid" id="scopeGrid">
+            <label class="scope"><input type="checkbox" data-scope="cookies" /><span>Cookies</span></label>
+            <label class="scope"><input type="checkbox" data-scope="cache" /><span>Cache</span></label>
+            <label class="scope"><input type="checkbox" data-scope="history" /><span>History</span></label>
+            <label class="scope"><input type="checkbox" data-scope="localStorage" /><span>Local storage</span></label>
+            <label class="scope"><input type="checkbox" data-scope="indexedDB" /><span>IndexedDB</span></label>
+            <label class="scope"><input type="checkbox" data-scope="serviceWorkers" /><span>Service workers</span></label>
+            <label class="scope"><input type="checkbox" data-scope="formData" /><span>Form data</span></label>
+            <label class="scope"><input type="checkbox" data-scope="passwords" /><span>Passwords</span></label>
+            <label class="scope"><input type="checkbox" data-scope="downloads" /><span>Download log</span></label>
+          </div>
+          <button class="btn btn--danger btn-sm" id="wipeNowBtn">☢ Self-Destruct now (everything)</button>
+        </div>
+      </section>
+
+      <!-- UPGRADE -->
+      <section class="tab" data-tab="upgrade">
+        <header class="tab__head">
+          <h1>Enlist</h1>
+          <p class="sub">Unlock managed servers, location cloaking, and squadron tools.</p>
+        </header>
+        <div class="tiers" id="tiers"></div>
+        <div class="panel panel--bracket license">
+          <div class="eyebrow">Activate license</div>
+          <div class="license__row">
+            <input id="licenseKey" class="field" placeholder="SR-XXXX-XXXX-XXXX-XXXX" />
+            <button class="btn" id="activateBtn">Activate</button>
+          </div>
+          <p class="mini" id="licenseMsg"></p>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="tab" data-tab="about">
+        <header class="tab__head">
+          <h1>About</h1>
+          <p class="sub">Stealth Raider <span id="verTag"></span></p>
+        </header>
+        <div class="panel panel--bracket about">
+          <p>Like the B-21 Raider it's named for, this kit is built for covert missions: get in, get out, unnoticed. It masks your browser fingerprint, cloaks your location, routes your IP through a proxy, runs raids in incognito, and self-destructs every trace.</p>
+          <h3>Straight talk on capabilities</h3>
+          <ul>
+            <li><b>IP:</b> a browser extension cannot invent a new IP. Real cloaking routes through a proxy/SOCKS endpoint — supply your own (free) or use managed Stealth Servers (Pro).</li>
+            <li><b>Fingerprint / location:</b> spoofed inside the page via API overrides. Highly effective against common trackers; a determined adversary with deep timing analysis may still find tells.</li>
+            <li><b>Auto-wipe:</b> raids run incognito (Chrome discards that data on close); auto-wipe additionally scrubs any spill into your normal profile, scoped to the raid window so it never touches your existing browsing.</li>
+          </ul>
+          <p class="mini">Use responsibly and lawfully. This tool is for privacy, security research, and authorized testing.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>
