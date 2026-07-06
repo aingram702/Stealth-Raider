@@ -9,9 +9,12 @@ import { defaultLicense } from "./license.js";
 // don't leave old installs with `undefined` fields.
 function mergeSettings(stored) {
   const out = structuredClone(DEFAULT_SETTINGS);
+  // Guard against prototype-pollution keys sneaking in via a settings patch.
+  const FORBIDDEN = new Set(["__proto__", "constructor", "prototype"]);
   const walk = (target, src) => {
     if (!src || typeof src !== "object") return;
     for (const k of Object.keys(src)) {
+      if (FORBIDDEN.has(k) || !Object.prototype.hasOwnProperty.call(src, k)) continue;
       if (
         src[k] &&
         typeof src[k] === "object" &&

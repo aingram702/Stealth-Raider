@@ -48,18 +48,21 @@ function render(state) {
     $("rScreen").textContent = `${profile.screen.width}×${profile.screen.height} · ${profile.hardwareConcurrency}c/${profile.deviceMemory}gb`;
     $("rLocale").textContent = profile.language;
     $("rTz").textContent = profile.timezone;
-    $("rGeo").innerHTML = settings.spoofLocation && profile.geolocation
-      ? `<span class="accent">${profile.geolocation.latitude.toFixed(3)}, ${profile.geolocation.longitude.toFixed(3)}</span>`
-      : "device default";
+    if (settings.spoofLocation && profile.geolocation) {
+      setDD($("rGeo"), `${profile.geolocation.latitude.toFixed(3)}, ${profile.geolocation.longitude.toFixed(3)}`, true);
+    } else {
+      setDD($("rGeo"), "device default", false);
+    }
   }
-  // Network status.
+  // Network status. SECURITY: proxy.host is user input — never interpolate it
+  // into innerHTML (the popup runs with extension privileges). Use textContent.
   const net = $("rNet");
   if (settings.proxyEnabled && settings.proxy.host) {
-    net.innerHTML = `<span class="accent">${settings.proxy.scheme}://${settings.proxy.host}:${settings.proxy.port}</span>`;
+    setDD(net, `${settings.proxy.scheme}://${settings.proxy.host}:${settings.proxy.port}`, true);
   } else if (settings.proxy.presetId) {
-    net.innerHTML = `<span class="accent">Stealth Server · ${settings.proxy.presetId}</span>`;
+    setDD(net, `Stealth Server · ${settings.proxy.presetId}`, true);
   } else {
-    net.textContent = "direct (real IP)";
+    setDD(net, "direct (real IP)", false);
   }
 
   // Stats.
@@ -68,6 +71,19 @@ function render(state) {
   $("sIds").textContent = stats.identitiesForged || 0;
 
   void hasFeature;
+}
+
+// Set a readout value without an HTML sink. `accent` wraps it in a themed span.
+function setDD(dd, text, accent) {
+  dd.textContent = "";
+  if (accent) {
+    const s = document.createElement("span");
+    s.className = "accent";
+    s.textContent = text;
+    dd.appendChild(s);
+  } else {
+    dd.textContent = text;
+  }
 }
 
 function shortGpu(r) {

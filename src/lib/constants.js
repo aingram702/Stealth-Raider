@@ -8,7 +8,7 @@
 export const APP = {
   name: "Stealth Raider",
   codename: "B-21",
-  version: "1.0.0",
+  version: "1.0.1",
 };
 
 /** chrome.storage.local keys. */

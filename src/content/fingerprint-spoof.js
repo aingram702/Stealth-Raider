@@ -68,7 +68,7 @@
   window.addEventListener("message", (ev) => {
     if (ev.source !== window) return;
     const d = ev.data;
-    if (d && d.__sr && d.dir === "toPage") applyConfig(d.settings, d.profile);
+    if (d && d.__sr === true && d.dir === "toPage") applyConfig(d.settings, d.profile);
   });
   // Announce readiness in case the bridge injected us and is waiting.
   window.postMessage({ __sr: true, dir: "toContent", type: "ready" }, "*");

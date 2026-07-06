@@ -76,19 +76,35 @@ async function applyAll(settings) {
   ]);
 }
 
+const PROXY_SCHEMES = new Set(["http", "https", "socks4", "socks5"]);
+
+// Validate a proxy config before handing it to chrome.proxy. Returns a clean
+// {scheme,host,port} or null if it can't be trusted.
+function sanitizeProxy(proxy) {
+  if (!proxy) return null;
+  const scheme = PROXY_SCHEMES.has(proxy.scheme) ? proxy.scheme : "socks5";
+  const host = String(proxy.host || "").trim();
+  // Hostnames, IPv4, or bracketed IPv6 only — reject anything with spaces,
+  // quotes, or control chars that could distort the proxy rule.
+  if (!host || !/^[a-zA-Z0-9._\-\[\]:]+$/.test(host)) return null;
+  let port = Number(proxy.port);
+  if (!Number.isInteger(port) || port < 1 || port > 65535) port = 1080;
+  return { scheme, host, port };
+}
+
 async function applyProxy(settings) {
   try {
-    if (!settings.ghostMode || !settings.proxyEnabled || !settings.proxy.host) {
+    const clean = sanitizeProxy(settings.proxy);
+    if (!settings.ghostMode || !settings.proxyEnabled || !clean) {
       await chrome.proxy.settings.clear({ scope: "regular" });
       return;
     }
-    const { scheme, host, port } = settings.proxy;
     await chrome.proxy.settings.set({
       scope: "regular",
       value: {
         mode: "fixed_servers",
         rules: {
-          singleProxy: { scheme, host, port: Number(port) || 1080 },
+          singleProxy: clean,
           bypassList: ["localhost", "127.0.0.1", "[::1]"],
         },
       },
@@ -98,7 +114,10 @@ async function applyProxy(settings) {
   }
 }
 
-// Supply proxy credentials when the proxy asks for auth.
+// Supply proxy credentials ONLY to the exact proxy the user configured, and
+// only while proxying is enabled. This stops the real proxy password from
+// leaking to any other proxy (e.g. a rogue captive portal) that issues a
+// 407 challenge.
 chrome.webRequest.onAuthRequired.addListener(
   (details, callback) => {
     if (!details.isProxy) {
@@ -106,8 +125,15 @@ chrome.webRequest.onAuthRequired.addListener(
       return;
     }
     getSettings().then((s) => {
+      const clean = sanitizeProxy(s.proxy);
+      const ch = details.challenger || {};
+      const matches =
+        s.proxyEnabled &&
+        clean &&
+        ch.host === clean.host &&
+        Number(ch.port) === clean.port;
       const { username, password } = s.proxy || {};
-      if (username) callback?.({ authCredentials: { username, password } });
+      if (matches && username) callback?.({ authCredentials: { username, password } });
       else callback?.({});
     });
   },
@@ -346,10 +372,28 @@ chrome.commands?.onCommand.addListener(async (command) => {
 });
 
 // --------------------------------------------------------------------------
-// Message router (popup / options / content bridge)
+// Message router (popup / options only)
 // --------------------------------------------------------------------------
 
+// SECURITY: every message handler here can change settings, wipe data, or
+// trigger a raid. Only trust messages from our own extension pages (popup /
+// cockpit). Content scripts run in web-page context and must never reach these
+// handlers; the browser sets `sender` and it cannot be forged by a page.
+const EXT_ORIGIN = chrome.runtime.getURL("");
+function isTrustedSender(sender) {
+  return (
+    !!sender &&
+    sender.id === chrome.runtime.id &&
+    typeof sender.url === "string" &&
+    sender.url.startsWith(EXT_ORIGIN)
+  );
+}
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (!isTrustedSender(sender)) {
+    sendResponse({ ok: false, error: "unauthorized sender" });
+    return false;
+  }
   (async () => {
     switch (msg?.type) {
       case MSG.GET_STATE: {

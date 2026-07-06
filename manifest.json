@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Stealth Raider",
   "short_name": "Stealth Raider",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Covert browsing kit: spoof your fingerprint, location & IP, launch incognito raids, and self-destruct all traces. Get in, get out, unnoticed.",
   "author": "Stealth Raider",
   "minimum_chrome_version": "116",
@@ -33,16 +33,18 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
+      "js": ["src/content/fingerprint-spoof.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": ["<all_urls>"],
       "js": ["src/content/inject-loader.js"],
       "run_at": "document_start",
       "all_frames": true,
       "match_about_blank": true
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["src/content/fingerprint-spoof.js"],
-      "matches": ["<all_urls>"]
     }
   ],
   "permissions": [
@@ -58,6 +60,9 @@
     "webNavigation"
   ],
   "host_permissions": ["<all_urls>"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'none'; form-action 'none'"
+  },
   "incognito": "spanning",
   "commands": {
     "panic": {

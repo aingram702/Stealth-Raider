@@ -1,6 +1,6 @@
 {
   "name": "stealth-raider",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Covert-ops privacy kit for Chrome: spoof fingerprint, location & IP, incognito raids, self-destruct traces.",
   "type": "module",
