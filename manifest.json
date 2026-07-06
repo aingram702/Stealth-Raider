@@ -3,7 +3,7 @@
   "name": "Stealth Raider",
   "short_name": "Stealth Raider",
   "version": "1.0.1",
-  "description": "Covert browsing kit: spoof your fingerprint, location & IP, launch incognito raids, and self-destruct all traces. Get in, get out, unnoticed.",
+  "description": "Covert browsing kit: spoof your fingerprint, location & IP, run incognito raids, and self-destruct every trace.",
   "author": "Stealth Raider",
   "minimum_chrome_version": "116",
   "icons": {
