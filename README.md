@@ -1,4 +1,4 @@
-# 🛩️ Stealth Raider
+# Stealth Raider
 
 > **Get in. Get out. Unnoticed.**
 > A covert-ops privacy kit for Chrome. Named for the B‑21 Raider stealth bomber —
