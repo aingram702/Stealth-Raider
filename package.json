@@ -7,6 +7,7 @@
   "scripts": {
     "icons": "python3 tools/generate-icons.py",
     "promo": "node tools/generate-promo.mjs",
+    "screenshots": "node tools/generate-screenshots.mjs",
     "check": "node --check src/content/inject-loader.js && node --check src/content/fingerprint-spoof.js && for f in src/lib/*.js src/background/*.js src/popup/*.js src/options/*.js; do node --input-type=module --check < \"$f\"; done",
     "zip": "zip -r -FS stealth-raider.zip manifest.json src -x '*.DS_Store'"
   },

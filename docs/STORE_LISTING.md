@@ -191,18 +191,20 @@ https://github.com/aingram702/Stealth-Raider/blob/main/PRIVACY.md
 
 ---
 
-## Screenshots
-> 1280×800 or 640×400 PNG/JPEG. 1–5 images. Suggested set + captions:
+## Screenshots (ready to upload — 1280×800)
+> Store accepts 1280×800 or 640×400. Generated from the live extension via
+> `node tools/generate-screenshots.mjs` (or `npm run screenshots`).
+> Upload in this order; captions below.
 
-1. Cockpit dashboard (docs/screenshot-cockpit.png) —
+1. `docs/screenshots/01-popup-1280x800.png` —
+   "Arm your systems and launch a raid in one click."
+2. `docs/screenshots/02-dashboard-1280x800.png` —
    "Mission control: live identity, network route, and stats at a glance."
-2. Popup with quick toggles —
-   "Arm your stealth systems and launch a raid in one click."
-3. Identity Forge tab —
+3. `docs/screenshots/03-identity-1280x800.png` —
    "A coherent spoofed fingerprint you can regenerate anytime."
-4. Network / IP tab —
+4. `docs/screenshots/04-network-1280x800.png` —
    "Cloak your IP with your own proxy or managed Stealth Servers."
-5. Session tab —
+5. `docs/screenshots/05-session-1280x800.png` —
    "Choose exactly what Self-Destruct erases."
 
 ## Promotional images (ready to upload)
