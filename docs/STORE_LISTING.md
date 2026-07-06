@@ -205,9 +205,15 @@ https://github.com/aingram702/Stealth-Raider/blob/main/PRIVACY.md
 5. Session tab —
    "Choose exactly what Self-Destruct erases."
 
-## Small promo tile (440×280)
-Headline: "Get in. Get out. Unnoticed."
-Sub: "Stealth Raider — covert browsing kit"
+## Promotional images (ready to upload)
+Generated at the store's exact required sizes:
+
+• Small promo tile — 440×280 — `docs/promo/small-tile-440x280.png`
+• Marquee promo tile — 1400×560 — `docs/promo/marquee-1400x560.png`
+
+Both carry the wordmark, the tagline "Get in. Get out. Unnoticed.", the
+flying-wing mark, and the cockpit HUD styling. To regenerate after a design
+tweak: `node tools/generate-promo.mjs` (or the scratch script used to build them).
 
 ## Search / discovery terms
 privacy, anti-fingerprint, fingerprint spoofing, incognito, proxy, anti-tracking,
