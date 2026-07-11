@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Stealth Raider — Cockpit Theme",
+  "short_name": "Stealth Raider Theme",
+  "version": "1.0.0",
+  "description": "Matte-black stealth hull, phosphor-teal HUD, cockpit new tab. The Stealth Raider look for your whole browser.",
+  "author": "Stealth Raider",
+  "icons": {
+    "128": "images/icon128.png"
+  },
+  "theme": {
+    "images": {
+      "theme_ntp_background": "images/theme_ntp_background.png"
+    },
+    "colors": {
+      "frame": [7, 10, 13],
+      "frame_inactive": [10, 14, 18],
+      "frame_incognito": [5, 7, 10],
+      "frame_incognito_inactive": [7, 10, 13],
+      "toolbar": [14, 20, 26],
+      "toolbar_button_icon": [34, 211, 168],
+      "toolbar_text": [214, 228, 234],
+      "tab_text": [230, 240, 243],
+      "tab_background_text": [120, 138, 148],
+      "tab_background_text_inactive": [93, 108, 118],
+      "bookmark_text": [214, 228, 234],
+      "ntp_background": [7, 10, 13],
+      "ntp_text": [214, 228, 234],
+      "ntp_link": [34, 211, 168],
+      "ntp_header": [28, 39, 49],
+      "button_background": [14, 20, 26],
+      "omnibox_background": [14, 20, 26],
+      "omnibox_text": [214, 228, 234]
+    },
+    "tints": {
+      "buttons": [-1, -1, -1],
+      "frame": [-1, -1, -1],
+      "background_tab": [-1, -1, -1]
+    },
+    "properties": {
+      "ntp_background_alignment": "bottom",
+      "ntp_background_repeat": "no-repeat",
+      "ntp_logo_alternate": 1
+    }
+  }
+}

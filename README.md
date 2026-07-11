@@ -128,6 +128,13 @@ syntax‑check with `node --check` / `node --input-type=module --check`.
 
 ---
 
+## Companion Chrome theme
+
+A matching **browser theme** lives in [`theme/`](theme/) — it dresses the whole
+browser (frame, toolbar, tabs, omnibox, and a cockpit new-tab page) in the
+Stealth Raider look. It's a separate package: `chrome://extensions` → **Load
+unpacked** → select the `theme/` folder. See [`theme/README.md`](theme/README.md).
+
 ## Legal & responsible use
 
 Stealth Raider is a **privacy** tool intended for lawful use: protecting your own
