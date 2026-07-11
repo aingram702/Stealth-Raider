@@ -11,7 +11,9 @@
     "theme": "node tools/generate-theme-bg.mjs",
     "theme:store": "node tools/generate-theme-store.mjs",
     "check": "node --check src/content/inject-loader.js && node --check src/content/fingerprint-spoof.js && for f in src/lib/*.js src/background/*.js src/popup/*.js src/options/*.js; do node --input-type=module --check < \"$f\"; done",
-    "zip": "zip -r -FS stealth-raider.zip manifest.json src -x '*.DS_Store'"
+    "zip": "rm -f stealth-raider.zip && zip -r -FS stealth-raider.zip manifest.json src -x '*.DS_Store'",
+    "theme:zip": "rm -f stealth-raider-theme.zip && cd theme && zip -r -FS ../stealth-raider-theme.zip manifest.json images -x '*.DS_Store'",
+    "zip:all": "npm run zip && npm run theme:zip"
   },
   "keywords": ["chrome-extension", "privacy", "anti-fingerprint", "incognito", "proxy", "mv3"],
   "license": "MIT",

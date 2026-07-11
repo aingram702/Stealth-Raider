@@ -1,5 +1,6 @@
 # Build artifacts
 stealth-raider.zip
+stealth-raider-theme.zip
 *.crx
 *.pem
 
