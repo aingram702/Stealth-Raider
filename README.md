@@ -66,6 +66,9 @@ and self‑destructs every trace when the mission ends.
 | `Ctrl/⌘ + Shift + U` | Open the cockpit |
 
 ---
+## Chrome Web Store Locations:
+* Extension -- Stealth Raider: https://chromewebstore.google.com/detail/makieakibeikgnajmjflemdgkbcmbjik?utm_source=item-share-cb
+* Theme -- Stealth Raider - Cockpit Theme: https://chromewebstore.google.com/detail/iplajibognjpjimhcjdoedjmldmbmjoc?utm_source=item-share-cb
 
 ## Architecture
 
